@@ -127,6 +127,7 @@ const PublicDomoList = (props) => {
 };
 
 const App = () => {
+    console.log("apping");
     const [reloadDomos, setReloadDomos] = useState(false);
 
     return (

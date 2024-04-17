@@ -24,7 +24,8 @@ const login = (req, res) => {
 
     req.session.account = Account.toAPI(account);
 
-    return res.json({ redirect: '/maker' });
+    // TODO: Change this to send to the Landing Page
+    return res.json({ redirect: '/questions' });
   });
 };
 
@@ -47,7 +48,8 @@ const signup = async (req, res) => {
     await newAccount.save();
     req.session.account = Account.toAPI(newAccount);
 
-    return res.json({ redirect: '/maker' });
+    // TODO: Change this to send to the Landing Page
+    return res.json({ redirect: '/questions' });
   } catch (err) {
     console.log(err);
     if (err.code === 11000) {

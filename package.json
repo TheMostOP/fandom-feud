@@ -1,7 +1,7 @@
 {
-  "name": "domomaker",
+  "name": "fandomfeud",
   "version": "1.0.0",
-  "description": "A Simple Login Example using Node.js, Mongo and Redis",
+  "description": "A game where you try to guess other user's answers",
   "main": "./server/app.js",
   "scripts": {
     "webpack": "webpack",
