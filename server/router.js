@@ -19,6 +19,9 @@ const router = (app) => {
   app.get('/questions', mid.requiresLogin, controllers.Questions.questionPage);
   app.post('/questions', mid.requiresLogin, controllers.Questions.answerQuestions);
 
+  app.get('/game', mid.requiresLogin, controllers.Game.gamePage);
+  app.get('/getAllAnswers', mid.requiresLogin, controllers.Game.getAllAnswers);
+
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };
 

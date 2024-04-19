@@ -34,12 +34,10 @@ const answerQuestions = async (req, res) => {
 };
 
 const getAnswers = async (req, res) => {
-    console.log("getting Answers");
     try {
         const query = { answerer: req.session.account._id };
         const docs = await Answer.find(query).select('favShow favBook favMovie').lean().exec();
 
-        console.log(docs);
         return res.json({ answers: docs });
     } catch (err) {
         console.log(err);

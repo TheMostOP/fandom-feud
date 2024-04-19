@@ -66,7 +66,7 @@ const AnswerList = (props) => {
         return (
             <div key={answer.id} className="answer">
                 {/* TODO: remove reference to Domo */}
-                <img src="assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
+                {/* <img src="assets/img/domoface.jpeg" alt="domo face" className="domoFace" /> */}
                 <h3 className="favShow">Favorite Show: {answer.favShow}</h3>
                 <h3 className="favBook">Favorite Book: {answer.favBook}</h3>
                 <h3 className="favMovie">Favorite Movie: {answer.favMovie}</h3>

@@ -5,6 +5,7 @@ module.exports = {
         app: './client/maker.jsx',
         login: './client/login.jsx',
         questions: './client/questions.jsx',
+        game: './client/game.jsx',
     },
     module: {
         rules: [
