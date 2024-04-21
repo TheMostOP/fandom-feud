@@ -21,6 +21,7 @@ const router = (app) => {
 
   app.get('/game', mid.requiresLogin, controllers.Game.gamePage);
   app.get('/getAllAnswers', mid.requiresLogin, controllers.Game.getAllAnswers);
+  app.get('/getTopAnswers', mid.requiresLogin, controllers.Game.getTopAnswers);
 
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };

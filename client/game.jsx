@@ -123,7 +123,7 @@ const TopAnswersList = (props) => {
 
     useEffect(() => {
         const loadAnswersFromServer = async () => {
-            const response = await fetch('/getAllAnswers');
+            const response = await fetch('/getTopAnswers');
             const data = await response.json();
             setAnswers(data.answers);
         };
@@ -137,9 +137,6 @@ const TopAnswersList = (props) => {
             </div>
         );
     }
-
-    //For now, just the shows
-    console.log(answers);
 
     const answerNodes = answers.map(answer => {
         return (

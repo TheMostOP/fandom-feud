@@ -8,19 +8,19 @@ const AnswerSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    // set: setName,
+    set: setName,
   },
   favBook: {
     type: String,
     required: true,
     trim: true,
-    // set: setName,
+    set: setName,
   },
   favMovie: {
     type: String,
     required: true,
     trim: true,
-    // set: setName,
+    set: setName,
   },
   answerer: {
     type: mongoose.Schema.ObjectId,
