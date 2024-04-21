@@ -39,5 +39,8 @@ AnswerSchema.statics.toAPI = (doc) => ({
   favMovie: doc.favMovie,
 });
 
+
+
 const AnswerModel = mongoose.model('Answer', AnswerSchema);
+
 module.exports = AnswerModel;

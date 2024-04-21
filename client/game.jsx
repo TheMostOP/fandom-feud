@@ -130,6 +130,7 @@ const TopAnswersList = (props) => {
         loadAnswersFromServer();
     }, [props.reloadAnswers]);
 
+    console.log(answers);
     if (answers.length === 0) {
         return (
             <div className="answerList">
@@ -141,9 +142,9 @@ const TopAnswersList = (props) => {
     const answerNodes = answers.map(answer => {
         return (
             <div key={answer.id} className="answer">
-                <h3 className="favShow">Favorite Show: {answer.favShow}</h3>
-                <h3 className="favBook">Favorite Book: {answer.favBook}</h3>
-                <h3 className="favMovie">Favorite Movie: {answer.favMovie}</h3>
+                <h3 className="prompt">Prompt: {answer.prompt}</h3>
+                <h3 className="response">Response: {answer.response}</h3>
+                <h3 className="votes">Votes: {answer.votes}</h3>
             </div>
         );
     });
@@ -167,6 +168,7 @@ const Game = () => {
                 <AllAnswersList answers={[]} reloadAnswers={reloadAnswers} />
             </div>
             <div id="TopAnswers">
+                <p>Top Answers!</p>
                 <TopAnswersList answers={[]} reloadAnswers={reloadAnswers} />
             </div>
         </div>
