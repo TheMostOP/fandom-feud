@@ -22,6 +22,7 @@ const router = (app) => {
   app.get('/game', mid.requiresLogin, controllers.Game.gamePage);
   app.get('/getAllAnswers', mid.requiresLogin, controllers.Game.getAllAnswers);
   app.get('/getTopAnswers', mid.requiresLogin, controllers.Game.getTopAnswers);
+  app.post('/guess', mid.requiresLogin, controllers.Game.guessAnswers);
 
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };

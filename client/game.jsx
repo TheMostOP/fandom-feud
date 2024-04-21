@@ -3,43 +3,63 @@ const React = require('react');
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
 
-//TODO: If there's an error you can't figure out, it might be because onQuestionAnswered needs to be onAnswerAdded
-// const handleAnswer = (e, onQuestionAnswered) => {
-//     e.preventDefault();
-//     helper.hideError();
+//TODO: Make more dynamic
+let favShowAnswer = "N/A";
+let favBookAnswer = "N/A";
+let favMovieAnswer = "N/A";
 
-//     const favShow = e.target.querySelector('#favShow').value;
-//     const favBook = e.target.querySelector('#favBook').value;
-//     const favMovie = e.target.querySelector('#favMovie').value;
+const handleGuess = (e, onQuestionAnswered) => {
+    e.preventDefault();
+    helper.hideError();
 
-//     if (!favShow || !favBook || !favMovie) {
-//         helper.handleError('All fields are required');
-//         return false;
-//     }
+    const favShow = e.target.querySelector('#favShow').value;
+    const favBook = e.target.querySelector('#favBook').value;
+    const favMovie = e.target.querySelector('#favMovie').value;
 
-//     helper.sendPost(e.target.action, { favShow: favShow, favBook: favBook, favMovie: favMovie, }, onQuestionAnswered);
-//     return false;
-// }
+    if (!favShow || !favBook || !favMovie) {
+        helper.handleError('All fields are required');
+        return false;
+    }
 
-// const QuestionForm = (props) => {
-//     return (
-//         <form id="questionForm"
-//             onSubmit={(e) => handleAnswer(e, props.triggerReload)}
-//             name="questionForm"
-//             action="/questions"
-//             method="POST"
-//             className="questionForm"
-//         >
-//             <label htmlFor="favShow">What's your favorite TV show? </label>
-//             <input id="favShow" type="text" name="favShow" placeholder="e.g. Beverly Hillbillies" />
-//             <label htmlFor="favBook">What's your favorite book? </label>
-//             <input id="favBook" type="text" name="favBook" placeholder="e.g. The Great Gatsby" />
-//             <label htmlFor="favMovie">What's your favorite movie? </label>
-//             <input id="favMovie" type="text" name="favMovie" placeholder="e.g. It's a Wonderful Life" />
-//             <input className="questionSubmit" type="submit" value="Submit Answers" />
-//         </form>
-//     )
-// }
+    // const testAsync = async () => {
+    //     const response = await helper.sendPost(e.target.action, {
+    //         favShowGuess: favShow, favBookGuess: favBook, favMovieGuess: favMovie,
+    //         favShowAnswer: favShowAnswer, favBookAnswer: favBookAnswer, favMovieAnswer: favMovieAnswer,
+    //     }, onQuestionAnswered);
+    //     const data = await response.json();
+    //     console.log(data.answers);
+    // };
+    // testAsync();
+    
+    let test = helper.sendPost(e.target.action, {
+        favShowGuess: favShow, favBookGuess: favBook, favMovieGuess: favMovie,
+        favShowAnswer: favShowAnswer, favBookAnswer: favBookAnswer, favMovieAnswer: favMovieAnswer,
+    }, onQuestionAnswered);
+    console.log(test);
+    return false;
+}
+
+
+const GuessingForm = (props) => {
+    return (
+        <form id="guessingForm"
+            onSubmit={(e) => handleGuess(e, props.triggerReload)}
+            name="guessingForm"
+            action="/guess"
+            method="POST"
+            className="guessingForm"
+        >
+            <p>Guess what the most responded answer was to each prompt</p>
+            <label htmlFor="favShow">What's your favorite TV show? </label>
+            <input id="favShow" type="text" name="favShow" placeholder="e.g. Beverly Hillbillies" />
+            <label htmlFor="favBook">What's your favorite book? </label>
+            <input id="favBook" type="text" name="favBook" placeholder="e.g. The Great Gatsby" />
+            <label htmlFor="favMovie">What's your favorite movie? </label>
+            <input id="favMovie" type="text" name="favMovie" placeholder="e.g. It's a Wonderful Life" />
+            <input className="guessingSubmit" type="submit" value="Submit Answers" />
+        </form>
+    )
+}
 
 // //TODO: Remove or greatly alter this. Left for now for testing purposes
 // const AnswerList = (props) => {
@@ -81,42 +101,42 @@ const { createRoot } = require('react-dom/client');
 //     );
 // };
 
-const AllAnswersList = (props) => {
-    const [answers, setAnswers] = useState(props.answers);
+// const AllAnswersList = (props) => {
+//     const [answers, setAnswers] = useState(props.answers);
 
-    useEffect(() => {
-        const loadAnswersFromServer = async () => {
-            const response = await fetch('/getAllAnswers');
-            const data = await response.json();
-            setAnswers(data.answers);
-        };
-        loadAnswersFromServer();
-    }, [props.reloadAnswers]);
+//     useEffect(() => {
+//         const loadAnswersFromServer = async () => {
+//             const response = await fetch('/getAllAnswers');
+//             const data = await response.json();
+//             setAnswers(data.answers);
+//         };
+//         loadAnswersFromServer();
+//     }, [props.reloadAnswers]);
 
-    if (answers.length === 0) {
-        return (
-            <div className="answerList">
-                <h3 className="emptyAnswers">No answers Yet!</h3>
-            </div>
-        );
-    }
+//     if (answers.length === 0) {
+//         return (
+//             <div className="answerList">
+//                 <h3 className="emptyAnswers">No answers Yet!</h3>
+//             </div>
+//         );
+//     }
 
-    const answerNodes = answers.map(answer => {
-        return (
-            <div key={answer.id} className="answer">
-                <h3 className="favShow">Favorite Show: {answer.favShow}</h3>
-                <h3 className="favBook">Favorite Book: {answer.favBook}</h3>
-                <h3 className="favMovie">Favorite Movie: {answer.favMovie}</h3>
-            </div>
-        );
-    });
+//     const answerNodes = answers.map(answer => {
+//         return (
+//             <div key={answer.id} className="answer">
+//                 <h3 className="favShow">Favorite Show: {answer.favShow}</h3>
+//                 <h3 className="favBook">Favorite Book: {answer.favBook}</h3>
+//                 <h3 className="favMovie">Favorite Movie: {answer.favMovie}</h3>
+//             </div>
+//         );
+//     });
 
-    return (
-        <div className="answerList">
-            {answerNodes}
-        </div>
-    );
-};
+//     return (
+//         <div className="answerList">
+//             {answerNodes}
+//         </div>
+//     );
+// };
 
 const TopAnswersList = (props) => {
     const [answers, setAnswers] = useState(props.answers);
@@ -130,7 +150,6 @@ const TopAnswersList = (props) => {
         loadAnswersFromServer();
     }, [props.reloadAnswers]);
 
-    console.log(answers);
     if (answers.length === 0) {
         return (
             <div className="answerList">
@@ -140,6 +159,16 @@ const TopAnswersList = (props) => {
     }
 
     const answerNodes = answers.map(answer => {
+        //TODO: More dynamic
+        if(answer.prompt === "favShow") {
+            favShowAnswer = answer.response;
+        }
+        if(answer.prompt === "favBook") {
+            favBookAnswer = answer.response;
+        }
+        if(answer.prompt === "favMovie") {
+            favMovieAnswer = answer.response;
+        }
         return (
             <div key={answer.id} className="answer">
                 <h3 className="prompt">Prompt: {answer.prompt}</h3>
@@ -161,12 +190,12 @@ const Game = () => {
 
     return (
         <div>
-            {/* <div id="answerQuestions">
-                <QuestionForm triggerReload={() => setReloadAnswers(!reloadAnswers)} />
-            </div> */}
-            <div id="game">
-                <AllAnswersList answers={[]} reloadAnswers={reloadAnswers} />
+            <div id="answerQuestions">
+                <GuessingForm triggerReload={() => setReloadAnswers(!reloadAnswers)} />
             </div>
+            {/* <div id="game">
+                <AllAnswersList answers={[]} reloadAnswers={reloadAnswers} />
+            </div> */}
             <div id="TopAnswers">
                 <p>Top Answers!</p>
                 <TopAnswersList answers={[]} reloadAnswers={reloadAnswers} />
