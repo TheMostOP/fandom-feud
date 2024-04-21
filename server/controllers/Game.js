@@ -5,12 +5,12 @@ const { Game } = models;
 
 const gamePage = async (req, res) => res.render('game');
 
-//so far just called within this controller
+// so far just called within this controller
 const makeTopAnswer = (prompt, response, votes) => {
   const answerData = {
-    prompt: prompt,
-    response: response,
-    votes: votes,
+    prompt,
+    response,
+    votes,
   };
 
   try {
@@ -59,10 +59,10 @@ const getTopAnswers = async (req, res) => {
   try {
     // docs is an array of every answer
     // every answer can access the strings associated with each prompt with .[name of prompt]
-    const docs = await Answer.find({}).select('favShow favBook favMovie').lean().exec();
+    let docs = await Answer.find({}).select('favShow favBook favMovie').lean().exec();
 
     // first, sort the answers alphabetically, starting with favshow
-    let sortedDocs = docs.sort((a, b) => (a.favShow.localeCompare(b.favShow)));
+    docs = docs.sort((a, b) => (a.favShow.localeCompare(b.favShow)));
     // find out which answer is present the most times
     // by counting until the answer changes and seeing if it's larger than the last
     let counter = 0;
@@ -88,11 +88,11 @@ const getTopAnswers = async (req, res) => {
       }
     }
 
-    let topShow = makeTopAnswer("favShow", topAnswer, prevCount);
+    const topShow = makeTopAnswer('favShow', topAnswer, prevCount);
 
-    //repeat for favBook and favMovie
-    //TODO: make this more dynamic
-    sortedDocs = docs.sort((a, b) => (a.favBook.localeCompare(b.favBook)));
+    // repeat for favBook and favMovie
+    // TODO: make this more dynamic
+    docs = docs.sort((a, b) => (a.favBook.localeCompare(b.favBook)));
     // find out which answer is present the most times
     // by counting until the answer changes and seeing if it's larger than the last
     counter = 0;
@@ -118,7 +118,7 @@ const getTopAnswers = async (req, res) => {
       }
     }
 
-    let topBook = makeTopAnswer("favBook", topAnswer, prevCount);
+    const topBook = makeTopAnswer('favBook', topAnswer, prevCount);
 
     return res.json({ answers: [topShow, topBook] });
   } catch (err) {
