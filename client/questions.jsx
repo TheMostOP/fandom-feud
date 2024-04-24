@@ -17,7 +17,9 @@ const handleAnswer = (e, onQuestionAnswered) => {
         return false;
     }
 
-    helper.sendPost(e.target.action, { favShow: favShow, favBook: favBook, favMovie: favMovie, }, onQuestionAnswered);
+    helper.sendPost(e.target.action, { prompt: 'favShow', response: favShow, }, onQuestionAnswered);
+    helper.sendPost(e.target.action, { prompt: 'favBook', response: favBook, }, onQuestionAnswered);
+    helper.sendPost(e.target.action, { prompt: 'favMovie', response: favMovie, }, onQuestionAnswered);
     return false;
 }
 
@@ -65,9 +67,9 @@ const AnswerList = (props) => {
     const answerNodes = answers.map(answer => {
         return (
             <div key={answer.id} className="answer">
-                <h3 className="favShow">Favorite Show: {answer.favShow}</h3>
-                <h3 className="favBook">Favorite Book: {answer.favBook}</h3>
-                <h3 className="favMovie">Favorite Movie: {answer.favMovie}</h3>
+                <h3 className="favShow">{answer.prompt}: {answer.response}</h3>
+                {/* <h3 className="favBook">Favorite Book: {answer.favBook}</h3>
+                <h3 className="favMovie">Favorite Movie: {answer.favMovie}</h3> */}
             </div>
         );
     });
@@ -82,16 +84,16 @@ const AnswerList = (props) => {
 const Questions = () => {
     const [reloadAnswers, setReloadAnswers] = useState(false);
 
-        return (
-            <div>
-                <div id="answerQuestions">
-                    <QuestionForm triggerReload={() => setReloadAnswers(!reloadAnswers)} />
-                </div>
-                <div id="questions">
-                    <AnswerList answers={[]} reloadAnswers={reloadAnswers} />
-                </div>
+    return (
+        <div>
+            <div id="answerQuestions">
+                <QuestionForm triggerReload={() => setReloadAnswers(!reloadAnswers)} />
             </div>
-        );
+            <div id="questions">
+                <AnswerList answers={[]} reloadAnswers={reloadAnswers} />
+            </div>
+        </div>
+    );
 };
 
 const init = () => {

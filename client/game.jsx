@@ -8,6 +8,8 @@ let favShowAnswer = "N/A";
 let favBookAnswer = "N/A";
 let favMovieAnswer = "N/A";
 
+let currentCorrectAnswer = "N/A";
+
 const handleGuess = (e, onQuestionAnswered) => {
     e.preventDefault();
     helper.hideError();
@@ -31,13 +33,28 @@ const handleGuess = (e, onQuestionAnswered) => {
     // };
     // testAsync();
     
-    let test = helper.sendPost(e.target.action, {
+    helper.sendPost(e.target.action, {
         favShowGuess: favShow, favBookGuess: favBook, favMovieGuess: favMovie,
         favShowAnswer: favShowAnswer, favBookAnswer: favBookAnswer, favMovieAnswer: favMovieAnswer,
     }, onQuestionAnswered);
-    console.log(test);
     return false;
 }
+
+// const handleStart = (e, onButtonPressed) => {
+//     e.preventDefault();
+//     helper.hideError();
+
+//     const testAsync = async () => {
+//         const response = await helper.sendPost(e.target.action, {prompt: "favShow" }, onButtonPressed);
+//         const data = await response.json();
+//         console.log(data.answers);
+//     };
+//     testAsync();
+
+//     // let test = helper.sendPost(e.target.action, {prompt: "favShow" }, onButtonPresses);
+//     // console.log(test);
+//     return false;
+// }
 
 
 const GuessingForm = (props) => {
@@ -60,6 +77,20 @@ const GuessingForm = (props) => {
         </form>
     )
 }
+
+// const StartButton = (props) => {
+//     return (
+//         <form id="startButton"
+//             onSubmit={(e) => handleStart(e, props.triggerReload)}
+//             name="startButton"
+//             action="/getTopAnswers"
+//             method="POST"
+//             className="startButtonHolder"
+//         >
+//             <input className="startButton" type="submit" value="Start" />
+//         </form>
+//     )
+// }
 
 // //TODO: Remove or greatly alter this. Left for now for testing purposes
 // const AnswerList = (props) => {
@@ -143,13 +174,14 @@ const TopAnswersList = (props) => {
 
     useEffect(() => {
         const loadAnswersFromServer = async () => {
-            const response = await fetch('/getTopAnswers');
+            const response = await fetch('/getTopAnswers?prompt=favShow');
             const data = await response.json();
-            setAnswers(data.answers);
+            setAnswers(data.topAnswer);
         };
         loadAnswersFromServer();
     }, [props.reloadAnswers]);
 
+    console.log(answers.length);
     if (answers.length === 0) {
         return (
             <div className="answerList">

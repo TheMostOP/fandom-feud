@@ -5,14 +5,13 @@ const { Answer } = models;
 const questionPage = async (req, res) => res.render('questions');
 
 const answerQuestions = async (req, res) => {
-  if (!req.body.favShow || !req.body.favBook || !req.body.favMovie) {
+  if (!req.body.prompt || !req.body.response) {
     return res.status(400).json({ error: 'All fields are required!' });
   }
 
   const answerData = {
-    favShow: req.body.favShow,
-    favBook: req.body.favBook,
-    favMovie: req.body.favMovie,
+    prompt: req.body.prompt,
+    response: req.body.response,
     answerer: req.session.account._id,
   };
 
@@ -21,7 +20,7 @@ const answerQuestions = async (req, res) => {
     await newAnswer.save();
 
     return res.status(201).json({
-      favShow: newAnswer.favShow, favBook: newAnswer.favBook, favMovie: newAnswer.favMovie,
+      prompt: newAnswer.prompt, response: newAnswer.response,
     });
   } catch (err) {
     console.log(err);
@@ -36,7 +35,7 @@ const answerQuestions = async (req, res) => {
 const getAnswers = async (req, res) => {
   try {
     const query = { answerer: req.session.account._id };
-    const docs = await Answer.find(query).select('favShow favBook favMovie').lean().exec();
+    const docs = await Answer.find(query).select('prompt response').lean().exec();
 
     return res.json({ answers: docs });
   } catch (err) {
