@@ -7,6 +7,7 @@ const { createRoot } = require('react-dom/client');
 let favShowAnswer = "N/A";
 let favBookAnswer = "N/A";
 let favMovieAnswer = "N/A";
+let currentPrompt = "favShow";
 
 let currentCorrectAnswer = "N/A";
 
@@ -66,7 +67,8 @@ const GuessingForm = (props) => {
             method="POST"
             className="guessingForm"
         >
-            <p>Guess what the most responded answer was to each prompt</p>
+            <p>{currentPrompt}</p>
+            <p>{currentCorrectAnswer}</p>
             <label htmlFor="favShow">What's your favorite TV show? </label>
             <input id="favShow" type="text" name="favShow" placeholder="e.g. Beverly Hillbillies" />
             <label htmlFor="favBook">What's your favorite book? </label>
@@ -174,7 +176,7 @@ const TopAnswersList = (props) => {
 
     useEffect(() => {
         const loadAnswersFromServer = async () => {
-            const response = await fetch('/getTopAnswers?prompt=favShow');
+            const response = await fetch(`/getTopAnswers?prompt=${currentPrompt}`);
             const data = await response.json();
             setAnswers(data.topAnswer);
         };
@@ -183,6 +185,7 @@ const TopAnswersList = (props) => {
 
     //if something got returned for the prompt, then we got data successfully
     if (answers.prompt != undefined) {
+        currentCorrectAnswer = answers.response;
         const answerNodes =  (
                 <div key={answers.id} className="answer">
                     <h3 className="prompt">Prompt: {answers.prompt}</h3>
@@ -212,6 +215,7 @@ const Game = () => {
 
     return (
         <div>
+            <p>Guess what the most responded answer was to each prompt</p>
             <div id="answerQuestions">
                 <GuessingForm triggerReload={() => setReloadAnswers(!reloadAnswers)} />
             </div>
