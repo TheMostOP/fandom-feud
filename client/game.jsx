@@ -32,7 +32,7 @@ const handleGuess = (e, onQuestionAnswered) => {
     //     console.log(data.answers);
     // };
     // testAsync();
-    
+
     helper.sendPost(e.target.action, {
         favShowGuess: favShow, favBookGuess: favBook, favMovieGuess: favMovie,
         favShowAnswer: favShowAnswer, favBookAnswer: favBookAnswer, favMovieAnswer: favMovieAnswer,
@@ -181,8 +181,27 @@ const TopAnswersList = (props) => {
         loadAnswersFromServer();
     }, [props.reloadAnswers]);
 
+    console.log("answers.prompt");
+    console.log(answers.prompt);
+    console.log("answers.length");
     console.log(answers.length);
-    if (answers.length === 0) {
+    //if something got returned for the prompt, then we got data successfully
+    if (answers.prompt != undefined) {
+        const answerNodes =  (
+                <div key={answers.id} className="answer">
+                    <h3 className="prompt">Prompt: {answers.prompt}</h3>
+                    <h3 className="response">Response: {answers.response}</h3>
+                    <h3 className="votes">Votes: {answers.votes}</h3>
+                </div>
+            );
+
+        return (
+            <div className="answerList">
+                {answerNodes}
+            </div>
+        );
+    }
+    else {
         return (
             <div className="answerList">
                 <h3 className="emptyAnswers">No answers Yet!</h3>
@@ -190,31 +209,6 @@ const TopAnswersList = (props) => {
         );
     }
 
-    const answerNodes = answers.map(answer => {
-        //TODO: More dynamic
-        if(answer.prompt === "favShow") {
-            favShowAnswer = answer.response;
-        }
-        if(answer.prompt === "favBook") {
-            favBookAnswer = answer.response;
-        }
-        if(answer.prompt === "favMovie") {
-            favMovieAnswer = answer.response;
-        }
-        return (
-            <div key={answer.id} className="answer">
-                <h3 className="prompt">Prompt: {answer.prompt}</h3>
-                <h3 className="response">Response: {answer.response}</h3>
-                <h3 className="votes">Votes: {answer.votes}</h3>
-            </div>
-        );
-    });
-
-    return (
-        <div className="answerList">
-            {answerNodes}
-        </div>
-    );
 };
 
 const Game = () => {

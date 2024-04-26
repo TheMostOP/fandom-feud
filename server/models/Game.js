@@ -16,6 +16,7 @@ const TopAnswerSchema = new mongoose.Schema({
     trim: true,
     set: setName,
   },
+  //votes are indexed at 0
   votes: {
     type: Number,
     min: 0,

@@ -61,8 +61,9 @@ const getTopAnswers = async (req, res) => {
     const query = { prompt: req.query.prompt };
     // docs is an array of every answer
     // every answer can access the strings associated with each prompt with .response
-    let docs = await Answer.find({ query }).select('prompt response').lean().exec();
+    let docs = await Answer.find(query).select('prompt response').lean().exec();
 
+    console.log(docs);
     // first, sort the answers alphabetically by response
     docs = docs.sort((a, b) => (a.response.localeCompare(b.response)));
     // find out which answer is present the most times
@@ -70,6 +71,8 @@ const getTopAnswers = async (req, res) => {
     let counter = 0;
     let prevCount = 0;
     let topAnswer = 'N/A';
+    console.log(query);
+    console.log(docs);
     for (let i = 0; i < docs.length; i++) {
       // go through every answer until the prompt changes
       // first check if we're at the end of the array
