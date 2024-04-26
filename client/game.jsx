@@ -181,10 +181,6 @@ const TopAnswersList = (props) => {
         loadAnswersFromServer();
     }, [props.reloadAnswers]);
 
-    console.log("answers.prompt");
-    console.log(answers.prompt);
-    console.log("answers.length");
-    console.log(answers.length);
     //if something got returned for the prompt, then we got data successfully
     if (answers.prompt != undefined) {
         const answerNodes =  (
