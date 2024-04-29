@@ -9,8 +9,7 @@ const handleError = (message) => {
 
 const handleAnswer = (results) => {
   console.log(results);
-  //TODO: figure out formatting
-  message = `Favorite Show: ${results.favShowGrade}\nFavorite Book: ${results.favBookGrade}\nFavorite Movie: ${results.favMovieGrade}`;
+  message = `Your guess is: ${results.grade}!`;
   document.getElementById('results').innerHTML = message;
   document.getElementById('resultsMessage').classList.remove('hidden');
 };
@@ -31,8 +30,8 @@ const sendPost = async (url, data, handler) => {
   document.getElementById('errorMessageContainer').classList.add('hidden');
   // document.getElementById('resultsMessage').classList.add('hidden');
 
-  //TODO: more dynamic
-  if (result.favShowGrade) {
+  //if the result has a grade, it should be a response from guessAnswers in the game controller
+  if (result.grade) {
     handleAnswer(result);
   }
 

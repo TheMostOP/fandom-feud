@@ -101,41 +101,26 @@ const getTopAnswers = async (req, res) => {
 };
 
 const guessAnswers = async (req, res) => {
-  if (!req.body.favShowGuess || !req.body.favBookGuess || !req.body.favMovieGuess) {
+  if (!req.body.currentGuess || !req.body.currentCorrectAnswer || !req.body.currentPrompt) {
     return res.status(400).json({ error: 'All fields are required!' });
   }
 
   const answerData = {
-    favShowGuess: req.body.favShowGuess,
-    favBookGuess: req.body.favBookGuess,
-    favMovieGuess: req.body.favMovieGuess,
-    favShowAnswer: req.body.favShowAnswer,
-    favBookAnswer: req.body.favBookAnswer,
-    favMovieAnswer: req.body.favMovieAnswer,
+    currentGuess: req.body.currentGuess,
+    currentCorrectAnswer: req.body.currentCorrectAnswer,
+    currentPrompt: req.body.currentPrompt,
     answerer: req.session.account._id,
   };
 
-  let favShowGrade = 'wrong';
-  let favMovieGrade = 'wrong';
-  let favBookGrade = 'wrong';
+  let grade = 'wrong';
 
   try {
     // TODO: Make more dynamic
-    if (answerData.favShowGuess === answerData.favShowAnswer) {
-      favShowGrade = 'right';
+    if (answerData.currentGuess === answerData.currentCorrectAnswer) {
+      grade = 'right';
     }
-    if (answerData.favBookGuess === answerData.favBookAnswer) {
-      favBookGrade = 'right';
-    }
-    if (answerData.favMovieGuess === answerData.favMovieAnswer) {
-      favMovieGrade = 'right';
-    }
-    // const newAnswer = new Answer(answerData);
-    // await newAnswer.save();
 
-    return res.status(201).json({
-      favShowGrade, favBookGrade, favMovieGrade,
-    });
+    return res.status(201).json({ grade });
   } catch (err) {
     console.log(err);
     if (err.code === 11000) {

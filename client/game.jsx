@@ -7,6 +7,8 @@ const { createRoot } = require('react-dom/client');
 let favShowAnswer = "N/A";
 let favBookAnswer = "N/A";
 let favMovieAnswer = "N/A";
+
+let allPrompts = ["favShow", "favBook", "favMovie"];
 let currentPrompt = "favShow";
 
 let currentCorrectAnswer = "N/A";
@@ -15,28 +17,16 @@ const handleGuess = (e, onQuestionAnswered) => {
     e.preventDefault();
     helper.hideError();
 
-    const favShow = e.target.querySelector('#favShow').value;
-    const favBook = e.target.querySelector('#favBook').value;
-    const favMovie = e.target.querySelector('#favMovie').value;
+    //what the user guessed for the answer
+    const currentGuess = e.target.querySelector('#currentPrompt').value;
 
-    if (!favShow || !favBook || !favMovie) {
+    if (!currentGuess) {
         helper.handleError('All fields are required');
         return false;
     }
 
-    // const testAsync = async () => {
-    //     const response = await helper.sendPost(e.target.action, {
-    //         favShowGuess: favShow, favBookGuess: favBook, favMovieGuess: favMovie,
-    //         favShowAnswer: favShowAnswer, favBookAnswer: favBookAnswer, favMovieAnswer: favMovieAnswer,
-    //     }, onQuestionAnswered);
-    //     const data = await response.json();
-    //     console.log(data.answers);
-    // };
-    // testAsync();
-
     helper.sendPost(e.target.action, {
-        favShowGuess: favShow, favBookGuess: favBook, favMovieGuess: favMovie,
-        favShowAnswer: favShowAnswer, favBookAnswer: favBookAnswer, favMovieAnswer: favMovieAnswer,
+        currentGuess: currentGuess, currentCorrectAnswer: currentCorrectAnswer, currentPrompt: currentPrompt,
     }, onQuestionAnswered);
     return false;
 }
@@ -67,15 +57,10 @@ const GuessingForm = (props) => {
             method="POST"
             className="guessingForm"
         >
-            <p>{currentPrompt}</p>
             <p>{currentCorrectAnswer}</p>
-            <label htmlFor="favShow">What's your favorite TV show? </label>
-            <input id="favShow" type="text" name="favShow" placeholder="e.g. Beverly Hillbillies" />
-            <label htmlFor="favBook">What's your favorite book? </label>
-            <input id="favBook" type="text" name="favBook" placeholder="e.g. The Great Gatsby" />
-            <label htmlFor="favMovie">What's your favorite movie? </label>
-            <input id="favMovie" type="text" name="favMovie" placeholder="e.g. It's a Wonderful Life" />
-            <input className="guessingSubmit" type="submit" value="Submit Answers" />
+            <label htmlFor="currentPrompt">{currentPrompt} </label>
+            <input id="currentPrompt" type="text" name="currentPrompt" placeholder="type your answer here" />
+            <input className="guessingSubmit" type="submit" value="Submit Answer" />
         </form>
     )
 }
@@ -186,13 +171,13 @@ const TopAnswersList = (props) => {
     //if something got returned for the prompt, then we got data successfully
     if (answers.prompt != undefined) {
         currentCorrectAnswer = answers.response;
-        const answerNodes =  (
-                <div key={answers.id} className="answer">
-                    <h3 className="prompt">Prompt: {answers.prompt}</h3>
-                    <h3 className="response">Response: {answers.response}</h3>
-                    <h3 className="votes">Votes: {answers.votes}</h3>
-                </div>
-            );
+        const answerNodes = (
+            <div key={answers.id} className="answer">
+                <h3 className="prompt">Prompt: {answers.prompt}</h3>
+                <h3 className="response">Response: {answers.response}</h3>
+                <h3 className="votes">Votes: {answers.votes}</h3>
+            </div>
+        );
 
         return (
             <div className="answerList">
