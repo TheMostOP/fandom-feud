@@ -3,13 +3,9 @@ const React = require('react');
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
 
-//TODO: Make more dynamic
-let favShowAnswer = "N/A";
-let favBookAnswer = "N/A";
-let favMovieAnswer = "N/A";
-
 let allPrompts = ["favShow", "favBook", "favMovie"];
-let currentPrompt = "favShow";
+let currentPromptIndex = 0;
+let currentPrompt = allPrompts[currentPromptIndex];
 
 let currentCorrectAnswer = "N/A";
 
@@ -28,6 +24,17 @@ const handleGuess = (e, onQuestionAnswered) => {
     helper.sendPost(e.target.action, {
         currentGuess: currentGuess, currentCorrectAnswer: currentCorrectAnswer, currentPrompt: currentPrompt,
     }, onQuestionAnswered);
+
+    //update the current prompt
+    //TODO: change to happen only after they run out of lives
+    currentPromptIndex++;
+    //make sure there are still prompts left
+    if(currentPromptIndex >= allPrompts.length) {
+        //TODO: switch to telling the player they won and giving them a score
+        currentPromptIndex = 0;
+    }
+    currentPrompt = allPrompts[currentPromptIndex];
+
     return false;
 }
 
