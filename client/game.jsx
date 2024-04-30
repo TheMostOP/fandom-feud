@@ -3,7 +3,8 @@ const React = require('react');
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
 
-let allPrompts = ["favShow", "favBook", "favMovie"];
+//TODO: get prompts dynamically? Might be a stretch goal
+let allPrompts = ["What is your favorite show?", "What is your favorite book?", "What is your favorite movie?"];
 let currentPromptIndex = 0;
 let currentPrompt = allPrompts[currentPromptIndex];
 

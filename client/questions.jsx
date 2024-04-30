@@ -17,9 +17,9 @@ const handleAnswer = (e, onQuestionAnswered) => {
         return false;
     }
 
-    helper.sendPost(e.target.action, { prompt: 'favShow', response: favShow, }, onQuestionAnswered);
-    helper.sendPost(e.target.action, { prompt: 'favBook', response: favBook, }, onQuestionAnswered);
-    helper.sendPost(e.target.action, { prompt: 'favMovie', response: favMovie, }, onQuestionAnswered);
+    helper.sendPost(e.target.action, { prompt: 'What is your favorite show?', response: favShow, }, onQuestionAnswered);
+    helper.sendPost(e.target.action, { prompt: 'What is your favorite book?', response: favBook, }, onQuestionAnswered);
+    helper.sendPost(e.target.action, { prompt: 'What is your favorite movie?', response: favMovie, }, onQuestionAnswered);
     return false;
 }
 
@@ -67,9 +67,7 @@ const AnswerList = (props) => {
     const answerNodes = answers.map(answer => {
         return (
             <div key={answer.id} className="answer">
-                <h3 className="favShow">{answer.prompt}: {answer.response}</h3>
-                {/* <h3 className="favBook">Favorite Book: {answer.favBook}</h3>
-                <h3 className="favMovie">Favorite Movie: {answer.favMovie}</h3> */}
+                <h3 className="usersAnswers">{answer.prompt}: {answer.response}</h3>
             </div>
         );
     });

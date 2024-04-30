@@ -24,6 +24,7 @@ const makeTopAnswer = (prompt, response, votes) => {
     console.log(err);
     if (err.code === 11000) {
       // TODO: change this to be about if they already gave an answer
+      // TODO: update the prompt instead of returning an error. Check the dog cat thingy
       return { error: 'answer already exists!' };
     }
     return { error: 'An error occured making top answer!' };
