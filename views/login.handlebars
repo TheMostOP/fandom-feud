@@ -5,22 +5,30 @@
   <meta charset="utf-8" />
   <title>Fandom Feud</title>
   <link rel="shortcut icon" href="/assets/img/favicon.png" />
-  <link rel="stylesheet" type="text/css" href="/assets/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
 </head>
 
 <body>
-  <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo" /></a>
-    <div class="navlink"><a id="loginButton" href="/login">Login</a></div>
-    <div class="navlink"><a id="signupButton" href="/signup">Sign up</a></div>
+  <nav class="navbar has-background-primary" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo" /></a>
+    </div>
+    <div class="navbar-start">
+      <div class="navbar-menu is-active has-background-primary">
+        <a class="navbar-item" id="loginButton" href="/login">Login</a>
+        <a class="navbar-item" id="signupButton" href="/signup">Sign up</a>
+      </div>
+    </div>
   </nav>
 
-  <section id="content">
+  <div class="content m-5" id="errorMessageContainer" class='hidden'>
+    <h3><span class="has-text-danger" id="errorMessage"></span></h3>
+  </div>
+
+  <section class="content" id="content">
 
   </section>
 
-  <div id="errorMessageContainer" class='hidden'>
-    <h3><span id="errorMessage"></span></h3>
-  </div>
   <script src="/assets/loginBundle.js"></script>
 </body>
 
