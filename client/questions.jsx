@@ -32,18 +32,19 @@ const QuestionForm = (props) => {
             method="POST"
             className="questionForm"
         >
-            <label htmlFor="favShow">What's your favorite TV show? </label>
-            <input id="favShow" type="text" name="favShow" placeholder="e.g. Beverly Hillbillies" />
-            <label htmlFor="favBook">What's your favorite book? </label>
-            <input id="favBook" type="text" name="favBook" placeholder="e.g. The Great Gatsby" />
-            <label htmlFor="favMovie">What's your favorite movie? </label>
-            <input id="favMovie" type="text" name="favMovie" placeholder="e.g. It's a Wonderful Life" />
-            <input className="questionSubmit" type="submit" value="Submit Answers" />
+            <h1>Your Questionaire</h1>
+            <p>Answer the following questions. Your answers will be recorded.</p>
+            <label class="label" htmlFor="favShow">What's your favorite TV show? </label>
+            <input class="input" id="favShow" type="text" name="favShow" placeholder="e.g. Beverly Hillbillies" />
+            <label class="label" htmlFor="favBook">What's your favorite book? </label>
+            <input class="input" id="favBook" type="text" name="favBook" placeholder="e.g. The Great Gatsby" />
+            <label class="label" htmlFor="favMovie">What's your favorite movie? </label>
+            <input class="input" id="favMovie" type="text" name="favMovie" placeholder="e.g. It's a Wonderful Life" />
+            <input class="button my-2" type="submit" value="Submit Answers" />
         </form>
     )
 }
 
-//TODO: Remove or greatly alter this. Left for now for testing purposes
 const AnswerList = (props) => {
     const [answers, setAnswers] = useState(props.answers);
 
@@ -67,7 +68,7 @@ const AnswerList = (props) => {
     const answerNodes = answers.map(answer => {
         return (
             <div key={answer.id} className="answer">
-                <h3 className="usersAnswers">{answer.prompt}: {answer.response}</h3>
+                <p className="usersAnswers">{answer.prompt}: {answer.response}</p>
             </div>
         );
     });
@@ -83,11 +84,12 @@ const Questions = () => {
     const [reloadAnswers, setReloadAnswers] = useState(false);
 
     return (
-        <div>
-            <div id="answerQuestions">
+        <div class="m-5">
+            <div class="field" id="answerQuestions">
                 <QuestionForm triggerReload={() => setReloadAnswers(!reloadAnswers)} />
             </div>
             <div id="questions">
+                <h2>Your Answers!</h2>
                 <AnswerList answers={[]} reloadAnswers={reloadAnswers} />
             </div>
         </div>
