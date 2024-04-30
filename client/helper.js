@@ -1,3 +1,9 @@
+let lives = 3;
+let answeredCorrectly = false;
+
+const getAnsweredCorrectly = () => {
+  return answeredCorrectly;
+}
 /* Takes in an error message. Sets the error message up in html, and
    displays it to the user. Will be hidden by other events that could
    end in an error.
@@ -10,6 +16,12 @@ const handleError = (message) => {
 const handleAnswer = (results) => {
   console.log(results);
   message = `Your guess is: ${results.grade}!`;
+  if (results.grade == 'right') {
+    answeredCorrectly = true;
+  }
+  else {
+    answeredCorrectly = false;
+  }
   document.getElementById('results').innerHTML = message;
   document.getElementById('resultsMessage').classList.remove('hidden');
 };
@@ -56,4 +68,6 @@ module.exports = {
   handleError,
   sendPost,
   hideError,
+  lives,
+  getAnsweredCorrectly,
 };

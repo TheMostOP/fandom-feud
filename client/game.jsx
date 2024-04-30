@@ -8,9 +8,21 @@ let allPrompts = ["What is your favorite show?", "What is your favorite book?", 
 let currentPromptIndex = 0;
 let currentPrompt = allPrompts[currentPromptIndex];
 
+let lives = 3;
+
 let currentCorrectAnswer = "N/A";
 
-const handleGuess = (e, onQuestionAnswered) => {
+const updatePrompt = () => {
+    currentPromptIndex++;
+    //make sure there are still prompts left
+    if (currentPromptIndex >= allPrompts.length) {
+        //TODO: switch to telling the player they won and giving them a score
+        currentPromptIndex = 0;
+    }
+    currentPrompt = allPrompts[currentPromptIndex];
+}
+
+const handleGuess = async (e, onQuestionAnswered) => {
     e.preventDefault();
     helper.hideError();
 
@@ -22,19 +34,26 @@ const handleGuess = (e, onQuestionAnswered) => {
         return false;
     }
 
-    helper.sendPost(e.target.action, {
+    let test = await helper.sendPost(e.target.action, {
         currentGuess: currentGuess, currentCorrectAnswer: currentCorrectAnswer, currentPrompt: currentPrompt,
     }, onQuestionAnswered);
 
-    //update the current prompt
-    //TODO: change to happen only after they run out of lives
-    currentPromptIndex++;
-    //make sure there are still prompts left
-    if(currentPromptIndex >= allPrompts.length) {
-        //TODO: switch to telling the player they won and giving them a score
-        currentPromptIndex = 0;
+    //if they answered correct, update the current prompt
+    if (helper.getAnsweredCorrectly()) {
+        updatePrompt();
     }
-    currentPrompt = allPrompts[currentPromptIndex];
+    //if not, check if they are out of lives
+    if (lives > 0) {
+        lives--;
+    }
+    //if not, subtract one life and let them try again
+    else {
+        //if so, reset lives, tell them the correct answer and move onto the next question
+        lives = 3;
+        document.getElementById('results').innerHTML = "Out of guesses. The correct answer is " + currentCorrectAnswer;
+        updatePrompt();
+    }
+
 
     return false;
 }
@@ -229,3 +248,7 @@ const init = () => {
 };
 
 window.onload = init;
+
+module.exports = {
+    currentPromptIndex,
+};
