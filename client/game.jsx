@@ -48,6 +48,14 @@ const handleGuess = async (e, onQuestionAnswered) => {
     }
     //if not, subtract one life and let them try again
     else {
+        //advetisement
+        document.getElementById('advertisement').classList.add('is-block');
+        document.getElementById('advertisement').classList.remove('is-hidden');
+        document.getElementById('closeAdButton').onclick = function () {
+            document.getElementById('advertisement').classList.remove('is-block');
+            document.getElementById('advertisement').classList.add('is-hidden');
+        };
+
         //if so, reset lives, tell them the correct answer and move onto the next question
         lives = 3;
         document.getElementById('results').innerHTML = "Out of guesses. The correct answer is " + currentCorrectAnswer;
