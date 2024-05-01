@@ -73,21 +73,8 @@ const getAnswers = async (req, res) => {
   }
 };
 
-// const getPublicDomos = async (req, res) => {
-//   try {
-//     const query = { publicity: 'true' };
-//     const docs = await Domo.find(query).select('name age element publicity').lean().exec();
-
-//     return res.json({ domos: docs });
-//   } catch (err) {
-//     console.log(err);
-//     return res.status(500).json({ error: 'Error retrieving domos!' });
-//   }
-// };
-
 module.exports = {
   questionPage,
   answerQuestions,
   getAnswers,
-  //   getPublicDomos,
 };

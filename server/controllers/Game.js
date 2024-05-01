@@ -124,11 +124,7 @@ const guessAnswers = async (req, res) => {
     return res.status(201).json({ grade });
   } catch (err) {
     console.log(err);
-    if (err.code === 11000) {
-      // TODO: change this to be about if they already gave an answer
-      return res.status(400).json({ error: 'Domo already exists!' });
-    }
-    return res.status(500).json({ error: 'An error occured making domo!' });
+    return res.status(500).json({ error: 'An error occured guessing answers!' });
   }
 };
 
