@@ -5,25 +5,30 @@
     <meta charset="utf-8" />
     <title>Fandom Feud</title>
     <link rel="shortcut icon" href="/assets/img/favicon.png" />
-    <link rel="stylesheet" type="text/css" href="/assets/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
 </head>
 
 <body>
-    <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo" /></a>
-        <div class="navlink"><a href="/logout">Log out</a></div>
-        <div class="navlink"><a id="questionsButton" href="/questions">Questions</a></div>
+    <nav class="navbar has-background-primary" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/login"><img id="logo" src="/assets/img/logo.jpg" alt="ff logo" /></a>
+        </div>
+        <div class="navbar-start">
+            <div class="navbar-menu is-active has-background-primary">
+                <a class="navbar-item" href="/logout">Log out</a>
+                <a class="navbar-item" id="questionsButton" href="/questions">Questions</a>
+            </div>
+        </div>
     </nav>
 
-    <section id="game">
+    <div class="content m-5" id="errorMessageContainer" class='hidden'>
+        <h3><span class="has-text-danger" id="errorMessage"></span></h3>
+    </div>
 
+    <section class="content m-5" id="game">
     </section>
 
-    <div id="errorMessageContainer" class='hidden'>
-        <img id="speech" src="/assets/img/speech.png" alt="speech box" />
-        <h3><span id="errorMessage"></span></h3>
-    </div>
-    <div id="resultsMessage" class='hidden'>
-        <img id="speech" src="/assets/img/speech.png" alt="speech box" />
+    <div class="content m-5" id="resultsMessage" class='hidden'>
         <h3><span id="results"></span></h3>
     </div>
     <script src="/assets/gameBundle.js"></script>

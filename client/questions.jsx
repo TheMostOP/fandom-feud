@@ -11,6 +11,7 @@ const handleAnswer = (e, onQuestionAnswered) => {
     const favShow = e.target.querySelector('#favShow').value;
     const favBook = e.target.querySelector('#favBook').value;
     const favMovie = e.target.querySelector('#favMovie').value;
+    const favMusical = e.target.querySelector('#favMusical').value;
 
     if (!favShow || !favBook || !favMovie) {
         helper.handleError('All fields are required');
@@ -20,6 +21,7 @@ const handleAnswer = (e, onQuestionAnswered) => {
     helper.sendPost(e.target.action, { prompt: 'What is your favorite show?', response: favShow, }, onQuestionAnswered);
     helper.sendPost(e.target.action, { prompt: 'What is your favorite book?', response: favBook, }, onQuestionAnswered);
     helper.sendPost(e.target.action, { prompt: 'What is your favorite movie?', response: favMovie, }, onQuestionAnswered);
+    helper.sendPost(e.target.action, { prompt: 'What is your favorite musical?', response: favMusical, }, onQuestionAnswered);
     return false;
 }
 
@@ -40,6 +42,8 @@ const QuestionForm = (props) => {
             <input class="input" id="favBook" type="text" name="favBook" placeholder="e.g. The Great Gatsby" />
             <label class="label" htmlFor="favMovie">What's your favorite movie? </label>
             <input class="input" id="favMovie" type="text" name="favMovie" placeholder="e.g. It's a Wonderful Life" />
+            <label class="label" htmlFor="favMusical">What's your favorite musical? </label>
+            <input class="input" id="favMusical" type="text" name="favMusical" placeholder="e.g. The Pirates Of Penzance" />
             <input class="button my-2" type="submit" value="Submit Answers" />
         </form>
     )

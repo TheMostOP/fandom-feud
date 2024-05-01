@@ -10,11 +10,10 @@ const getAnsweredCorrectly = () => {
 */
 const handleError = (message) => {
   document.getElementById('errorMessage').textContent = message;
-  document.getElementById('errorMessageContainer').classList.remove('hidden');
+  document.getElementById('errorMessageContainer').style.display = 'block';
 };
 
 const handleAnswer = (results) => {
-  console.log(results);
   message = `Your guess is: ${results.grade}!`;
   if (results.grade == 'right') {
     answeredCorrectly = true;
@@ -23,7 +22,7 @@ const handleAnswer = (results) => {
     answeredCorrectly = false;
   }
   document.getElementById('results').innerHTML = message;
-  document.getElementById('resultsMessage').classList.remove('hidden');
+  document.getElementById('resultsMessage').style.display = 'block';
 };
 
 /* Sends post requests to the server using fetch. Will look for various
@@ -39,7 +38,7 @@ const sendPost = async (url, data, handler) => {
   });
 
   const result = await response.json();
-  document.getElementById('errorMessageContainer').classList.add('hidden');
+  document.getElementById('errorMessage').style.display = 'hidden';
   // document.getElementById('resultsMessage').classList.add('hidden');
 
   //if the result has a grade, it should be a response from guessAnswers in the game controller
@@ -61,7 +60,7 @@ const sendPost = async (url, data, handler) => {
 };
 
 const hideError = () => {
-  document.getElementById('errorMessageContainer').classList.add('hidden');
+  document.getElementById('errorMessage').style.display = 'hidden';
 };
 
 module.exports = {
